@@ -1,0 +1,23 @@
+{
+  "schema_version": "content-generation.adapter.v1",
+  "helper_repository": "https://github.com/Pukujan/content-generation-modules",
+  "helper_version": "0.5.12",
+  "helper_commit": "62340f3de702f6d2a7d97b9e16465b98360976a3",
+  "modules": [
+    "brand-foundation",
+    "content-context",
+    "writing-direction",
+    "human-sounding-writing",
+    "human-output-naming",
+    "visual-direction",
+    "image-generation",
+    "html-demo"
+  ],
+  "authoritative_project_files": [
+    "PROJECT.md",
+    "AGENTS.md",
+    "PLAN.md",
+    "README.md"
+  ],
+  "adoption_status": "Study adapter for the graph-engineering lab. No generated narrative assets are required for the baseline."
+}

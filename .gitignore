@@ -1,0 +1,12 @@
+.sources/
+.venv/
+.workspaces/
+.graph-evidence/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+node_modules/
+dist/

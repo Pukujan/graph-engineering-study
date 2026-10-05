@@ -1,0 +1,26 @@
+{
+  "schema_version": "content-generation.review-rubric.v1",
+  "dimensions": [
+    {
+      "id": "inference_boundary",
+      "question": "Is every model call identifiable, optional where intended, and downstream of deterministic evidence?",
+      "weight": 3
+    },
+    {
+      "id": "success_authority",
+      "question": "Does deterministic validation, rather than model self-review, own the success edge?",
+      "weight": 3
+    },
+    {
+      "id": "reproducibility",
+      "question": "Are source revisions, commands, attempt counts, and validation results inspectable?",
+      "weight": 3
+    },
+    {
+      "id": "study_clarity",
+      "question": "Can a reader map each repository and OSS dependency to one responsibility?",
+      "weight": 2
+    }
+  ],
+  "decision_rule": "Reject an architecture change if it moves a mechanically testable decision into an LLM node without a documented reason."
+}
