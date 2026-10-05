@@ -1,0 +1,15 @@
+{
+  "schema_version": "content-generation.project-brief.v2",
+  "project": "graph-engineering-study",
+  "audience": [
+    "An operator studying how deterministic workflow graphs and coding agents should divide software-engineering work."
+  ],
+  "problem": "A strong coding model is often asked to spend inference on setup, routing, retries, and validation that ordinary software can perform more reliably, while design-oriented app builders can be fast at scaffolding but weak at hard debugging.",
+  "solution": "A study lab that pins existing OSS and project references, reuses a mature frontend substrate, makes deterministic graph edges explicit, and invokes a coding worker only on unresolved semantic failures.",
+  "evidence": [],
+  "boundaries": [
+    "GitHub repository setup is not proof that local Docker, Node, browser, or coding-agent runs succeed.",
+    "No paid model is required on the baseline path.",
+    "Downloaded source checkouts remain local under .sources and are not vendored into git."
+  ]
+}
