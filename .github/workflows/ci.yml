@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile source
+        run: python -m compileall -q src scripts tests
+
+      - name: Install pinned Pydantic Graph
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "pydantic-graph @ git+https://github.com/pydantic/pydantic-ai.git@62013d9fa54e441e03a792ba8c26c20b56d55291#subdirectory=pydantic_graph"
+
+      - name: Install study package
+        run: python -m pip install -e . pytest
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Render graph
+        run: graph-study diagram
