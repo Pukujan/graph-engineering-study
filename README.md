@@ -25,7 +25,7 @@ coding worker                      optional inference
 validate again                     deterministic
 ```
 
-The initial GUI substrate comes from `Pukujan/app-builder-automation`. The real multi-agent install path comes from `Pukujan/agent-custom-setup`, with OIO/PCM/CGM at the certified release-train revisions.
+The initial GUI substrate comes from `Pukujan/app-builder-automation`. The real multi-agent install path comes from `Pukujan/agent-custom-setup`, with OIO/PCM/CGM at the current release-train PCM/CGM/OIO revisions.
 
 ## Read first
 
@@ -129,3 +129,7 @@ Phase 2 adds Dagger and Nx around those same semantics. Phase 3 studies Hatchet 
 This repository was assembled through GitHub. The pull-request CI can validate Python syntax, the current Pydantic Graph API, tests, and graph rendering.
 
 It does **not** prove the full local hotload, Node/pnpm app build, Docker, browser, Dagger, or coding-worker path works on your machine. That is the next Codex/operator verification step, and failures from it should be fixed as evidence rather than hidden.
+
+## Hotload compatibility note
+
+The study lock deliberately uses the current ACS installer head because the train-certified ACS revision predates the four-component `--oio-root` install path. The PCM, CGM, and OIO checkouts still follow the revisions required by that installer's `stack-mesh.json`. On platforms where the OIO installer reports its path unsupported, ACS will correctly report a partial install rather than fake success.
