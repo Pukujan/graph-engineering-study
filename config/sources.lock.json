@@ -1,6 +1,6 @@
 {
   "schema_version": "graph-engineering-study.sources.v1",
-  "recorded_at": "2026-10-05T23:22:00Z",
+  "recorded_at": "2026-10-05T23:33:00Z",
   "groups": {
     "stack": [
       {
@@ -21,8 +21,8 @@
         "id": "agent-custom-setup",
         "repo": "Pukujan/agent-custom-setup",
         "url": "https://github.com/Pukujan/agent-custom-setup.git",
-        "commit": "589b0a970e099ac0721a77cbc3f88f27bf37d481",
-        "license_note": "FSL-1.1-ALv2 at current project version; fetched for study/internal use"
+        "commit": "25be219bb7341addba8849a8ffb6dba8695ff17d",
+        "license_note": "FSL-1.1-ALv2 at current project version; current installer head used because it contains the four-component OIO-aware hotload path"
       },
       {
         "id": "observational-issue-ops",
