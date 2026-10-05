@@ -1,0 +1,30 @@
+{
+  "schema_version": "content-generation.brand-language.v1",
+  "name": "graph-engineering-study",
+  "personality": [
+    "mechanical where software can be mechanical",
+    "explicit about inference boundaries",
+    "evidence-first",
+    "easy to reverse-study"
+  ],
+  "audience_feeling": "I can see exactly why the graph called a coding model and exactly what proved the result.",
+  "promise": "A small study lab that puts deterministic scaffolding and verification around an optional coding worker.",
+  "preferred_terms": {
+    "graph": "explicit state and control flow that routes on executable evidence",
+    "coding worker": "the replaceable reasoning component called only for hard repair",
+    "validator": "deterministic commands whose exit status controls the success edge",
+    "substrate": "the known app-builder starter copied before any model edits"
+  },
+  "avoid": [
+    "calling a model response verified",
+    "calling copied boilerplate reasoning",
+    "calling the baseline production-ready",
+    "claiming a local run occurred when only GitHub files were changed"
+  ],
+  "good_examples": [
+    "The compiler decides whether the repair passed; the coding worker only proposes the repair."
+  ],
+  "bad_examples": [
+    "The agent reviewed its own work and decided the app is fixed."
+  ]
+}
