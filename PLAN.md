@@ -74,7 +74,7 @@ This increment does the boring work:
 - lock exact source revisions;
 - create a cross-platform source fetcher;
 - add a CGM adapter so the real ACS installer has its required adopter surface;
-- add a wrapper that invokes the certified ACS hotloader against fetched PCM/CGM/OIO checkouts;
+- add a wrapper that invokes the current OIO-aware ACS hotloader against the release-train PCM/CGM/OIO revisions against fetched PCM/CGM/OIO checkouts;
 - add a deterministic UI scaffold step that copies ABA's React/Vite/shadcn template;
 - add a local Pydantic Graph workflow;
 - make coding inference optional and disabled by default;
