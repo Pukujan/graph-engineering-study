@@ -1,0 +1,82 @@
+{
+  "schema_version": "graph-engineering-study.sources.v1",
+  "recorded_at": "2026-10-05T23:22:00Z",
+  "groups": {
+    "stack": [
+      {
+        "id": "project-continuity-modules",
+        "repo": "Pukujan/project-continuity-modules",
+        "url": "https://github.com/Pukujan/project-continuity-modules.git",
+        "commit": "851bcf72eb618e6fe4f49c3f0b8e26fefb90410f",
+        "license_note": "project-owned dependency; inspect source license before redistribution"
+      },
+      {
+        "id": "content-generation-modules",
+        "repo": "Pukujan/content-generation-modules",
+        "url": "https://github.com/Pukujan/content-generation-modules.git",
+        "commit": "62340f3de702f6d2a7d97b9e16465b98360976a3",
+        "license_note": "project-owned dependency; inspect source license before redistribution"
+      },
+      {
+        "id": "agent-custom-setup",
+        "repo": "Pukujan/agent-custom-setup",
+        "url": "https://github.com/Pukujan/agent-custom-setup.git",
+        "commit": "589b0a970e099ac0721a77cbc3f88f27bf37d481",
+        "license_note": "FSL-1.1-ALv2 at current project version; fetched for study/internal use"
+      },
+      {
+        "id": "observational-issue-ops",
+        "repo": "Pukujan/observational-issue-ops",
+        "url": "https://github.com/Pukujan/observational-issue-ops.git",
+        "commit": "a4bba77b770e5674d1124383cd0d26704236963d",
+        "license_note": "Apache-2.0 in referenced repository"
+      }
+    ],
+    "reference": [
+      {
+        "id": "app-builder-automation",
+        "repo": "Pukujan/app-builder-automation",
+        "url": "https://github.com/Pukujan/app-builder-automation.git",
+        "commit": "caaf975df057ea53c0a75f8a8b63aafbeaa74118",
+        "license_note": "project-owned reference; template attribution remains governed by that repository"
+      }
+    ],
+    "oss": [
+      {
+        "id": "pydantic-ai",
+        "repo": "pydantic/pydantic-ai",
+        "url": "https://github.com/pydantic/pydantic-ai.git",
+        "commit": "62013d9fa54e441e03a792ba8c26c20b56d55291",
+        "license": "MIT"
+      },
+      {
+        "id": "dagger",
+        "repo": "dagger/dagger",
+        "url": "https://github.com/dagger/dagger.git",
+        "commit": "84c150e3eda16edce5520160680750d9ffb82a2d",
+        "license": "Apache-2.0"
+      },
+      {
+        "id": "nx",
+        "repo": "nrwl/nx",
+        "url": "https://github.com/nrwl/nx.git",
+        "commit": "3ec060ff92ca7c61c4cb7d70a991587c08b8a7bc",
+        "license": "MIT"
+      },
+      {
+        "id": "openhands-sdk",
+        "repo": "OpenHands/software-agent-sdk",
+        "url": "https://github.com/OpenHands/software-agent-sdk.git",
+        "commit": "cb7eabaf7b784a2f58f9df35d610f106287e823b",
+        "license": "MIT"
+      },
+      {
+        "id": "hatchet",
+        "repo": "hatchet-dev/hatchet",
+        "url": "https://github.com/hatchet-dev/hatchet.git",
+        "commit": "be1964f25c0bd72ec8cbcd0c81c29b86d1da0bec",
+        "license": "MIT"
+      }
+    ]
+  }
+}
