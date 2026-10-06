@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from graph_study.actions import scaffold_from_app_builder  # noqa: E402
+from graph_study.sources import resolve_sources_dir  # noqa: E402
 
 
 def app_builder_commit() -> str:
@@ -35,7 +36,7 @@ def main() -> None:
     args = parser.parse_args()
 
     workspace = Path(args.out).resolve()
-    source = ROOT / ".sources" / "app-builder-automation"
+    source = resolve_sources_dir(ROOT) / "app-builder-automation"
     if not source.is_dir():
         raise SystemExit("app-builder source missing; run scripts/fetch_sources.py first")
 

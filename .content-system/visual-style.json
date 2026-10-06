@@ -1,8 +1,8 @@
 {
   "schema_version": "content-generation.visual-style.v1",
-  "reference_asset": "",
-  "generation_workflow": "none required for baseline",
-  "narrative_roles": [],
+  "reference_asset": "assets/hero-graph-factory.png",
+  "generation_workflow": "built-in image_gen",
+  "narrative_roles": ["hero"],
   "palette": {
     "background": "#FAFAF8",
     "ink": "#171717",
@@ -15,12 +15,19 @@
   ],
   "composition": [
     "show control flow before implementation detail",
-    "keep deterministic and inference work visually distinct by labels rather than decoration"
+    "keep deterministic and inference work visually distinct by position rather than decoration"
   ],
-  "text_policy": "Prefer diagrams and short labels. Do not imply autonomy beyond implemented gates.",
-  "roles": {},
+  "text_policy": "The hero illustration carries no baked-in text. Any title or subtitle is rendered as README text next to the image, never inside it.",
+  "roles": {
+    "hero": {
+      "orientation": "wide",
+      "dimensions": "1280x720",
+      "asset": "assets/hero-graph-factory.png"
+    }
+  },
   "reject_when": [
     "A diagram hides which node invokes inference.",
-    "A visual implies the coding worker owns the success decision."
+    "A visual implies the coding worker owns the success decision.",
+    "Baked-in text appears inside the hero image."
   ]
 }

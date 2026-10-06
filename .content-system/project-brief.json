@@ -6,10 +6,61 @@
   ],
   "problem": "A strong coding model is often asked to spend inference on setup, routing, retries, and validation that ordinary software can perform more reliably, while design-oriented app builders can be fast at scaffolding but weak at hard debugging.",
   "solution": "A study lab that pins existing OSS and project references, reuses a mature frontend substrate, makes deterministic graph edges explicit, and invokes a coding worker only on unresolved semantic failures.",
-  "evidence": [],
+  "evidence": [
+    {
+      "claim": "The executable workflow grants success only when deterministic validation returns ok; the coding worker can propose a repair but cannot mark a run successful.",
+      "source": "src/graph_study/flow.py, the Validate node, at commit ac985d31e16272186115903ecddf9072356595d6.",
+      "supports": "Validate.run branches on ValidationEvidence.ok and reaches _finish(\"passed\") only on a zero-exit validator; Repair is the single inference edge.",
+      "limits": "A source read does not prove the graph ran on any particular machine; local run evidence is recorded separately from the code.",
+      "recorded_at": "2026-10-05T00:00:00Z",
+      "status": "shipped",
+      "cite_in_readme": true,
+      "source_revision": {
+        "kind": "repository_artifact",
+        "reference": "graph-engineering-study flow.py at ac985d3",
+        "repository": "Pukujan/graph-engineering-study",
+        "commit": "ac985d31e16272186115903ecddf9072356595d6",
+        "path": "src/graph_study/flow.py",
+        "locator": "Validate.run",
+        "uri": "https://github.com/Pukujan/graph-engineering-study/blob/ac985d31e16272186115903ecddf9072356595d6/src/graph_study/flow.py"
+      }
+    },
+    {
+      "claim": "Bare command names such as pnpm are resolved through PATH and PATHEXT before execution, so Windows .CMD shims run instead of failing with WinError 2.",
+      "source": "src/graph_study/actions.py, the _resolve_executable helper, at commit ac985d31e16272186115903ecddf9072356595d6.",
+      "supports": "_resolve_executable calls shutil.which(argv[0]) and substitutes the resolved path, which is why the default validator no longer returns 127 on Windows.",
+      "limits": "The fix is platform-independent by construction, but the recorded reproduction came from a single Windows machine.",
+      "recorded_at": "2026-10-05T00:00:00Z",
+      "status": "shipped",
+      "cite_in_readme": false,
+      "source_revision": {
+        "kind": "repository_artifact",
+        "reference": "graph-engineering-study actions.py at ac985d3",
+        "repository": "Pukujan/graph-engineering-study",
+        "commit": "ac985d31e16272186115903ecddf9072356595d6",
+        "path": "src/graph_study/actions.py",
+        "locator": "_resolve_executable",
+        "uri": "https://github.com/Pukujan/graph-engineering-study/blob/ac985d31e16272186115903ecddf9072356595d6/src/graph_study/actions.py"
+      }
+    },
+    {
+      "claim": "The repository owner authorized completing this adopter content surface and enabling auto-merge that needs no stored credential.",
+      "source": "Owner instruction recorded during the 2026-10-05 working session on this repository.",
+      "supports": "Explains why the study repository carries a content-system adapter and a token-only auto-merge workflow at all.",
+      "limits": "A recorded decision is not proof that either path works; the workflow's own runs and the local hotload are the separate evidence.",
+      "recorded_at": "2026-10-05T00:00:00Z",
+      "status": "shipped",
+      "cite_in_readme": false,
+      "source_revision": {
+        "kind": "owner_decision",
+        "reference": "Owner authorization, 2026-10-05",
+        "observed_at": "2026-10-05"
+      }
+    }
+  ],
   "boundaries": [
     "GitHub repository setup is not proof that local Docker, Node, browser, or coding-agent runs succeed.",
     "No paid model is required on the baseline path.",
-    "Downloaded source checkouts remain local under .sources and are not vendored into git."
+    "Downloaded source checkouts remain local and are not vendored into git."
   ]
 }

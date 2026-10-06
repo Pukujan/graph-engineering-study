@@ -8,7 +8,7 @@ Read `PROJECT.md`, `PLAN.md`, and issue #1 before changing architecture.
 
 - Prefer deterministic code over inference whenever the output can be checked mechanically.
 - The success edge belongs to deterministic validation, not to the coding model.
-- Do not modify any checkout under `.sources/`; they are pinned study/reference sources.
+- Do not modify any pinned source checkout; they are read-only study/reference sources. Their location comes from `graph_study.sources.resolve_sources_dir`: `.sources/` outside the ACS dev root, the ACS deps cache inside it.
 - Do not put API keys, tokens, or local absolute paths in committed files.
 - Do not enable a paid coding worker by default.
 - Repair loops must stay bounded.

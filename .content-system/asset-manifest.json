@@ -1,5 +1,25 @@
 {
   "schema_version": "content-generation.asset-manifest.v1",
   "system_version": "0.5.12",
-  "assets": []
+  "assets": [
+    {
+      "path": "assets/hero-graph-factory.png",
+      "role": "README hero banner",
+      "orientation": "wide",
+      "dimensions": "1280x720",
+      "text_policy": "No text, labels, or lettering are baked into the image; the title and subtitle render as README text beside it.",
+      "prompt_recipe": "Wide editorial illustration for a software engineering README hero: a clean orderly factory assembly line of simple geometric machinery, conveyor segments and mechanical inspection gates in cool slate blue, with one distinct glowing amber station where a small robot arm works. Minimal flat vector style with subtle depth, generous negative space, soft even lighting, calm and precise, industrial but elegant. Absolutely no text, no labels, no lettering anywhere in the image. Intended README title: Deterministic factory, optional reasoning. Intended README subtitle: The graph owns the success edge.",
+      "exact_title": "Deterministic factory, optional reasoning",
+      "exact_subtitle": "The graph owns the success edge",
+      "alt_text": "A wide illustration of an orderly factory line of geometric machines in slate blue, with one glowing amber station where a single robot arm works.",
+      "usage": "Place directly below the README title as the primary hero banner.",
+      "crop_behavior": "Keep the amber station and the conveyor line visible on both wide and narrow crops; the surrounding negative space may crop freely.",
+      "rejection_conditions": "Reject if baked-in text appears, if the single amber station is not the clear focal point, or if the image reads as a generic tech collage rather than an orderly line with one marked station.",
+      "review": "accepted",
+      "review_decision": "accepted",
+      "provider": "built-in image_gen",
+      "prompt_record": ".content-system/prompts/hero-graph-factory.prompt.md",
+      "hash": "fcb773340cbd88049b12abd6514571ce2ce59d395cbcd4bb2bc7b38aa95f384d"
+    }
+  ]
 }

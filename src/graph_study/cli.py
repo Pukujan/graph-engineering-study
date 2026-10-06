@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .actions import scaffold_from_app_builder
 from .flow import GraphDeps, GraphState, factory_graph
+from .sources import resolve_sources_dir
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -24,7 +25,7 @@ def _source_commit(source_id: str) -> str:
 
 
 def _app_builder_root() -> Path:
-    return ROOT / ".sources" / "app-builder-automation"
+    return resolve_sources_dir(ROOT) / "app-builder-automation"
 
 
 async def _run(args: argparse.Namespace) -> int:

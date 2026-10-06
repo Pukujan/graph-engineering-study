@@ -9,6 +9,10 @@ import venv
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from graph_study.sources import resolve_sources_dir  # noqa: E402
+
 VENV = ROOT / ".venv"
 
 
@@ -46,15 +50,14 @@ def main() -> None:
         venv.EnvBuilder(with_pip=True).create(VENV)
 
     py = str(venv_python())
+    sources = resolve_sources_dir(ROOT)
 
     if not args.stack_only:
-        run([py, "-m", "pip", "install", "-e", ".sources/pydantic-ai/pydantic_graph"])
+        run([py, "-m", "pip", "install", "-e", str(sources / "pydantic-ai" / "pydantic_graph")])
         run([py, "-m", "pip", "install", "-e", "."])
         run([py, "-m", "pip", "install", "pytest"])
 
-    oio_requirements = (
-        ROOT / ".sources" / "observational-issue-ops" / "requirements.txt"
-    )
+    oio_requirements = sources / "observational-issue-ops" / "requirements.txt"
     if oio_requirements.is_file():
         run([py, "-m", "pip", "install", "-r", str(oio_requirements)])
 
