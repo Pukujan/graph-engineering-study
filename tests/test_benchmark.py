@@ -6,6 +6,7 @@ from pathlib import Path
 from graph_study.benchmark import (
     MANIFEST_NAME,
     check_freeze,
+    check_task_materials,
     seal_holdouts,
 )
 
@@ -26,6 +27,7 @@ def _complete_record() -> dict:
         },
         "sandbox": {"credentials": "synthetic only", "infrastructure": "disposable local"},
         "specs": {"pdd_commit": GOOD_COMMIT, "sdd_commit": GOOD_COMMIT},
+        "task_materials": {"package_sha256": GOOD_SHA},
         "formal": {"methods": ["TLA+", "Z3"]},
         "holdouts": {"manifest_sha256": GOOD_SHA, "created_before_start": True},
         "scoring": {"usability_separate_from_robustness": True},
@@ -98,3 +100,55 @@ def test_seal_holdouts_ignores_its_own_manifest(tmp_path: Path) -> None:
 
     assert after["files"] == 1
     assert after["package_sha256"] == before["package_sha256"]
+
+
+def _materials(tmp_path: Path, holdout_count: int = 5):
+    shared = tmp_path / "shared"
+    shared.mkdir()
+    (shared / "contract.md").write_text("# contract\n", encoding="utf-8")
+    shared_digest = seal_holdouts(shared)["package_sha256"]
+
+    holdouts = tmp_path / "holdouts"
+    holdouts.mkdir()
+    for i in range(1, holdout_count + 1):
+        (holdouts / f"h-{i:02d}.json").write_text("{}\n", encoding="utf-8")
+    sealed = seal_holdouts(holdouts)
+    manifest = tmp_path / "holdouts.manifest.sha256"
+    manifest.write_text(sealed["manifest"], encoding="utf-8")
+
+    record = {
+        "task_materials": {"package_sha256": shared_digest},
+        "holdouts": {"manifest_sha256": sealed["package_sha256"]},
+    }
+    return record, shared, manifest
+
+
+def test_task_materials_match(tmp_path: Path) -> None:
+    record, shared, manifest = _materials(tmp_path)
+
+    assert check_task_materials(record, shared, manifest) == []
+
+
+def test_task_materials_detect_shared_change(tmp_path: Path) -> None:
+    record, shared, manifest = _materials(tmp_path)
+    (shared / "contract.md").write_text("# edited\n", encoding="utf-8")
+
+    problems = check_task_materials(record, shared, manifest)
+
+    assert any("shared bundle digest" in p for p in problems)
+
+
+def test_task_materials_detect_wrong_holdout_count(tmp_path: Path) -> None:
+    record, shared, manifest = _materials(tmp_path, holdout_count=4)
+
+    problems = check_task_materials(record, shared, manifest)
+
+    assert any("expected 5" in p for p in problems)
+
+
+def test_task_materials_detect_missing_manifest(tmp_path: Path) -> None:
+    record, shared, _ = _materials(tmp_path)
+
+    problems = check_task_materials(record, shared, tmp_path / "absent.sha256")
+
+    assert any("not found" in p for p in problems)
