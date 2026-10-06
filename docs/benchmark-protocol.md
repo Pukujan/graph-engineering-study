@@ -88,7 +88,15 @@ python scripts/benchmark_timeline.py summary <arm>/timeline.jsonl
 
 `record` stamps UTC ISO-8601 and rejects unknown milestones; `summary` prints
 elapsed seconds per milestone and exits non-zero if the timeline is not
-monotonic. The four axes are:
+monotonic. Replay the visible acceptance cases against a running arm with:
+
+```bash
+python scripts/run_acceptance.py --base-url <arm-url> \
+  --cases benchmark/calibration/acceptance --out <arm>/evidence/acceptance.json
+```
+
+The runner speaks only the `contract.md` surface, so both arms get comparable
+evidence. The four axes are:
 
 - **Speed** — time to bootstrap, first compiling build, first usable end-to-end
   flow, first security gate passing, all visible acceptance tests, holdout
