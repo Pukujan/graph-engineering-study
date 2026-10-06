@@ -140,6 +140,17 @@ Kubernetes sandbox connector, minimal GUI, revocation, audit log, one TLA+ state
 machine, one SMT policy property, five hidden holdouts). Only once timing,
 evidence capture, and isolation are proven should the full benchmark start.
 
+The shared task bundle both arms receive lives in `benchmark/calibration/shared/`
+(`pdd.md`, `sdd.md`, and the normative `contract.md`), with visible acceptance
+cases in `benchmark/calibration/acceptance/`. Check the cases against the
+contract and the invariant registry before either arm runs:
+
+```bash
+python scripts/check_cases.py benchmark/calibration/acceptance \
+  --contract benchmark/calibration/shared/contract.md \
+  --invariants formal/invariants.template.json
+```
+
 ## Formal methods
 
 Formal methods are used only where they match the property being checked, and

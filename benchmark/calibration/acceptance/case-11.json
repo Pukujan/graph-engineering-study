@@ -1,0 +1,24 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-11",
+  "scenario": "the GUI exposes the required elements",
+  "contract_ref": "C-GUI-01",
+  "invariant_ref": null,
+  "steps": [
+    {
+      "method": "GET",
+      "path": "/",
+      "body": null
+    }
+  ],
+  "expect": {
+    "status": 200,
+    "gui_testids": [
+      "principals-table",
+      "resources-table",
+      "leases-table",
+      "audit-table",
+      "revocation-form"
+    ]
+  }
+}

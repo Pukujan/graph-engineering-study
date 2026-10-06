@@ -1,0 +1,23 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-05",
+  "scenario": "a revoked credential authorizes no new operation after revocation",
+  "contract_ref": "C-API-04",
+  "invariant_ref": "revocation-monotonicity",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/revocations",
+      "body": { "credential_id": "c-05" }
+    },
+    {
+      "method": "POST",
+      "path": "/operations",
+      "body": { "credential_id": "c-05", "resource": "db:reports", "action": "read" }
+    }
+  ],
+  "expect": {
+    "status": 403,
+    "json_subset": { "error": "revoked", "credential_id": "c-05" }
+  }
+}

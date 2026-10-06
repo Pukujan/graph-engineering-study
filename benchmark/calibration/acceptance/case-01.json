@@ -1,0 +1,18 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-01",
+  "scenario": "register a new agent principal",
+  "contract_ref": "C-API-01",
+  "invariant_ref": null,
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/principals",
+      "body": { "kind": "agent", "name": "calibration-agent" }
+    }
+  ],
+  "expect": {
+    "status": 201,
+    "json_subset": { "kind": "agent", "name": "calibration-agent", "state": "active" }
+  }
+}

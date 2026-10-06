@@ -1,0 +1,24 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-10",
+  "scenario": "an authorization-sensitive action appends an audit event",
+  "contract_ref": "C-AUDIT-01",
+  "invariant_ref": "audit-append-only",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/decisions",
+      "body": { "principal_id": "p-audit", "resource": "db:reports", "action": "read" }
+    },
+    {
+      "method": "GET",
+      "path": "/audit",
+      "body": null
+    }
+  ],
+  "expect": {
+    "status": 200,
+    "json_subset": {},
+    "audit_contains": { "actor": "p-audit", "action": "read", "decision": "allow" }
+  }
+}

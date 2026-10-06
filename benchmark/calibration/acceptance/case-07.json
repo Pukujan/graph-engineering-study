@@ -1,0 +1,18 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-07",
+  "scenario": "an unknown resource scope is rejected rather than guessed",
+  "contract_ref": "C-ERR-03",
+  "invariant_ref": null,
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/principals/{principal_id}/credentials",
+      "body": { "resource": "db:not-a-resource", "action": "read", "request_id": "r-07" }
+    }
+  ],
+  "expect": {
+    "status": 400,
+    "json_subset": { "error": "invalid_scope", "resource": "db:not-a-resource" }
+  }
+}
