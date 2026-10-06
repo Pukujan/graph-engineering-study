@@ -35,7 +35,7 @@ The repository is intentionally a lab. Every layer should be readable in isolati
 - **OpenHands Software Agent SDK** — optional OSS coding worker / comparison harness.
 - **Hatchet** — durable workflow runtime once local graph semantics are understood; phase 3.
 
-The source checkout cache lives under `.sources/` and is ignored by git. Source revisions are locked in `config/sources.lock.json`.
+The source checkout cache is git-ignored, and its location is resolved by `graph_study.sources.resolve_sources_dir`: `.sources/` beside the code outside the ACS dev root, the ACS deps cache inside it. Source revisions are locked in `config/sources.lock.json`.
 
 ## Core rule
 
@@ -184,7 +184,7 @@ This is intentionally compatible with a roughly $0–$1 experiment, but actual p
 
 ## Safety and rollback
 
-- Never edit anything inside `.sources/`.
+- Never edit a pinned source checkout (see `graph_study.sources.resolve_sources_dir`).
 - Never put credentials in the repo.
 - Never let the coding worker alter the graph's success criteria.
 - Validation must be repeatable and called after every repair.

@@ -3,12 +3,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import shutil
+import stat
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from graph_study.sources import resolve_sources_dir  # noqa: E402
+
 LOCK = ROOT / "config" / "sources.lock.json"
-DEST = ROOT / ".sources"
+LEGACY_DEST = ROOT / ".sources"
 
 
 def run(argv: list[str], *, cwd: Path | None = None, capture: bool = False) -> str:
@@ -42,8 +50,55 @@ def dirty(path: Path) -> bool:
     return bool(run(["git", "status", "--porcelain"], cwd=path, capture=True).strip())
 
 
-def fetch(entry: dict, *, reset: bool = False) -> None:
-    target = DEST / entry["id"]
+def _rmtree_readonly(path: Path) -> None:
+    """Remove a tree that may hold read-only git object files.
+
+    Git marks packed objects read-only, and on Windows a plain ``rmtree`` (or
+    the delete half of a cross-drive ``shutil.move``) fails on them.
+    """
+
+    def retry(func, target, _exc):
+        os.chmod(target, stat.S_IWRITE)
+        func(target)
+
+    try:
+        shutil.rmtree(path, onexc=retry)
+    except TypeError:  # Python < 3.12 spells the hook onerror
+        shutil.rmtree(path, onerror=retry)
+
+
+def migrate_legacy(legacy: Path, dest: Path) -> None:
+    """Relocate an in-repo cache to the configured destination.
+
+    Checkouts are copied then removed rather than re-fetched, so the pinned
+    revisions survive the relocation the ACS dev-root contract requires. A
+    checkout already at the destination is kept; an in-repo duplicate of it is
+    dropped, and anything else is left in place rather than overwritten.
+    """
+    if legacy == dest or not legacy.is_dir():
+        return
+    dest.mkdir(parents=True, exist_ok=True)
+    for child in sorted(legacy.iterdir()):
+        target = dest / child.name
+        if target.exists():
+            existing, incoming = head(target), head(child)
+            if incoming and incoming == existing:
+                _rmtree_readonly(child)
+                print(f"DEDUP {child.name} (already at {target})")
+            else:
+                print(f"KEPT {child.name} (destination differs: {target})")
+            continue
+        shutil.copytree(child, target, symlinks=True)
+        _rmtree_readonly(child)
+        print(f"MOVED {child.name} -> {target}")
+    try:
+        legacy.rmdir()
+    except OSError:
+        pass
+
+
+def fetch(entry: dict, dest: Path, *, reset: bool = False) -> None:
+    target = dest / entry["id"]
     expected = entry["commit"]
 
     if target.exists() and not (target / ".git").exists():
@@ -85,9 +140,16 @@ def main() -> None:
         default="all",
     )
     parser.add_argument(
+        "--dest",
+        help=(
+            "source cache directory; defaults to .sources outside the ACS dev "
+            "root and the ACS deps cache inside it"
+        ),
+    )
+    parser.add_argument(
         "--reset",
         action="store_true",
-        help="discard modifications inside .sources before re-pinning",
+        help="discard modifications inside the source cache before re-pinning",
     )
     args = parser.parse_args()
 
@@ -95,10 +157,14 @@ def main() -> None:
     groups = data["groups"]
     selected = groups.keys() if args.group == "all" else [args.group]
 
-    DEST.mkdir(exist_ok=True)
+    dest = Path(args.dest).expanduser() if args.dest else resolve_sources_dir(ROOT)
+    dest.mkdir(parents=True, exist_ok=True)
+    migrate_legacy(LEGACY_DEST, dest)
+    print(f"sources: {dest}")
+
     for group in selected:
         for entry in groups[group]:
-            fetch(entry, reset=args.reset)
+            fetch(entry, dest, reset=args.reset)
 
 
 if __name__ == "__main__":

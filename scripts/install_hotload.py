@@ -6,7 +6,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = ROOT / ".sources"
+sys.path.insert(0, str(ROOT / "src"))
+
+from graph_study.sources import resolve_sources_dir  # noqa: E402
+
+SOURCES = resolve_sources_dir(ROOT)
 
 ACS = SOURCES / "agent-custom-setup"
 PCM = SOURCES / "project-continuity-modules"
