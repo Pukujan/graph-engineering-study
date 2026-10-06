@@ -1,0 +1,42 @@
+{
+  "schema": "graph-study.benchmark.freeze.v1",
+  "_how_to_use": "Copy to benchmark/freeze.json, replace every null/false/empty value with the frozen experiment settings, then run `python scripts/check_freeze.py benchmark/freeze.json` and commit the record only once it reports COMPLETE. Do this before starting either arm.",
+  "task_spec_commit": null,
+  "starting_repo_commit": null,
+  "arms": {
+    "a": {
+      "harness": null,
+      "model": null
+    },
+    "b": {
+      "harness": null,
+      "model": null
+    }
+  },
+  "resources": {
+    "wall_clock_hours": null,
+    "monetary_budget_usd": null,
+    "token_budget": null,
+    "hardware_class": null
+  },
+  "sandbox": {
+    "credentials": null,
+    "infrastructure": null
+  },
+  "specs": {
+    "pdd_commit": null,
+    "sdd_commit": null
+  },
+  "formal": {
+    "methods": []
+  },
+  "holdouts": {
+    "manifest_sha256": null,
+    "created_before_start": false
+  },
+  "scoring": {
+    "usability_separate_from_robustness": false
+  },
+  "frozen_at": null,
+  "frozen_by": null
+}
