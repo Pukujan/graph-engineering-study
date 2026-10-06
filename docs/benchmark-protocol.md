@@ -114,6 +114,31 @@ evidence. The four axes are:
 Robustness is evaluated separately from usability. A system can be pleasant and
 fragile, or ugly and correct.
 
+## Differential and metamorphic checks
+
+Where both arms implement the same contract, feed identical requests to each and
+compare normalized decisions:
+
+```bash
+python scripts/compare_arms.py <arm-a>/evidence/decisions.json \
+  <arm-b>/evidence/decisions.json --classifications <classifications.json>
+```
+
+Volatile fields (ids, timestamps, free-text reasons, matched-rule order) are
+dropped so a difference is semantic, not incidental. Every difference must be
+classified as one of `equivalent`, `arm-a-bug`, `arm-b-bug`, `spec-ambiguity`,
+or `expected-difference`; an unclassified difference fails the check.
+
+Metamorphic relations are checked over observed before/after decision pairs:
+
+```bash
+python scripts/check_metamorphic.py <observations.json>
+```
+
+The relations are reorder-independence, unrelated-resource-unchanged,
+scope-reduction-never-increases, removed-allow-never-increases,
+added-deny-never-increases, and idempotent-replay-no-wider.
+
 ## Scoring
 
 Score both arms on usability, UI coherence, feature completeness, correctness,
