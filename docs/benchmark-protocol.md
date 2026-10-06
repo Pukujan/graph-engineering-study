@@ -63,6 +63,11 @@ is the value recorded in `holdouts.manifest_sha256`. Verify the sealed package
 later with `sha256sum -c <manifest>` on any POSIX host. The holdout runner
 produces machine-readable evidence only after the build cutoff.
 
+The five calibration holdouts, and where the operator keeps them, are described
+in `benchmark/calibration/HOLDOUTS.md`. Both the shared task bundle and the
+sealed holdouts are pinned in the freeze record and re-checked with
+`scripts/check_task_materials.py`.
+
 Suggested holdouts (from issue #2): stale/revoked session race, deny/allow
 policy conflict, connector minting broader credentials than requested, provider
 transient failure during issuance, cluster unreachable after authorization,

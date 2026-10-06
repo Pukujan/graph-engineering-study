@@ -27,6 +27,9 @@
     "pdd_commit": null,
     "sdd_commit": null
   },
+  "task_materials": {
+    "package_sha256": null
+  },
   "formal": {
     "methods": []
   },

@@ -18,6 +18,8 @@ from __future__ import annotations
 import hashlib
 from pathlib import Path
 
+from .cases import CALIBRATION_HOLDOUT_COUNT
+
 FREEZE_SCHEMA = "graph-study.benchmark.freeze.v1"
 HOLDOUT_SCHEMA = "graph-study.benchmark.holdouts.v1"
 MANIFEST_NAME = "manifest.sha256"
@@ -41,6 +43,7 @@ REQUIRED_FREEZE_FIELDS: dict[str, str] = {
     "sandbox.infrastructure": "str",
     "specs.pdd_commit": "commit",
     "specs.sdd_commit": "commit",
+    "task_materials.package_sha256": "sha256",
     "formal.methods": "list",
     "holdouts.manifest_sha256": "sha256",
     "holdouts.created_before_start": "true",
@@ -102,6 +105,75 @@ def check_freeze(record: object) -> list[str]:
         if value is _MISSING or not _satisfies(value, kind):
             missing.append(path)
     return missing
+
+
+def directory_package_sha256(directory: Path) -> str:
+    """Digest of the sha256sum manifest for every file under ``directory``.
+
+    Used to pin both the shared task bundle and the sealed holdouts: the digest
+    changes if any file is added, removed, or edited, without the contents ever
+    entering an arm's context.
+    """
+
+    return seal_holdouts(directory)["package_sha256"]
+
+
+def _check_holdout_manifest(path: Path, expected_digest: str) -> list[str]:
+    path = Path(path)
+    if not path.exists():
+        return [f"holdout manifest not found: {path}"]
+
+    text = path.read_text(encoding="utf-8")
+    lines = [line for line in text.splitlines() if line.strip()]
+    problems: list[str] = []
+    if len(lines) != CALIBRATION_HOLDOUT_COUNT:
+        problems.append(
+            f"holdout manifest has {len(lines)} entries, expected "
+            f"{CALIBRATION_HOLDOUT_COUNT}"
+        )
+    for line in lines:
+        digest, sep, rel = line.partition("  ")
+        if sep != "  " or not _is_hex(digest, 64) or not rel:
+            problems.append(f"malformed manifest line: {line!r}")
+
+    actual = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    if actual != expected_digest:
+        problems.append(
+            f"holdout manifest digest {actual} does not match "
+            f"holdouts.manifest_sha256 {expected_digest}"
+        )
+    return problems
+
+
+def check_task_materials(
+    record: object,
+    shared_dir: Path,
+    holdout_manifest: Path,
+) -> list[str]:
+    """Return problems when the frozen task materials do not match the record.
+
+    Re-seals ``shared_dir`` and compares it to ``task_materials.package_sha256``,
+    then checks the holdout manifest is well-formed, has exactly
+    ``CALIBRATION_HOLDOUT_COUNT`` entries, and matches
+    ``holdouts.manifest_sha256``. Empty list means the materials are pinned.
+    """
+
+    problems: list[str] = []
+
+    expected_shared = _lookup(record, "task_materials.package_sha256")
+    if isinstance(expected_shared, str):
+        actual = directory_package_sha256(shared_dir)
+        if actual != expected_shared:
+            problems.append(
+                f"task_materials.package_sha256 {expected_shared} does not match "
+                f"the shared bundle digest {actual}"
+            )
+
+    expected_holdouts = _lookup(record, "holdouts.manifest_sha256")
+    if isinstance(expected_holdouts, str):
+        problems.extend(_check_holdout_manifest(holdout_manifest, expected_holdouts))
+
+    return problems
 
 
 def seal_holdouts(directory: Path) -> dict:

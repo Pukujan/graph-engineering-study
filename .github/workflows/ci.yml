@@ -37,3 +37,6 @@ jobs:
           python scripts/check_cases.py benchmark/calibration/acceptance \
             --contract benchmark/calibration/shared/contract.md \
             --invariants formal/invariants.template.json
+
+      - name: Check task materials are pinned
+        run: python scripts/check_task_materials.py benchmark/freeze.template.json --allow-incomplete
