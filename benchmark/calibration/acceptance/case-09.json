@@ -1,0 +1,23 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-09",
+  "scenario": "replaying the same request id creates no additional privilege",
+  "contract_ref": "C-API-02",
+  "invariant_ref": "replay-no-extra-privilege",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/principals/{principal_id}/credentials",
+      "body": { "resource": "k8s:ns/team-a", "action": "get", "request_id": "r-09" }
+    },
+    {
+      "method": "POST",
+      "path": "/principals/{principal_id}/credentials",
+      "body": { "resource": "k8s:ns/team-a", "action": "get", "request_id": "r-09" }
+    }
+  ],
+  "expect": {
+    "status": 200,
+    "json_subset": { "resource": "k8s:ns/team-a", "action": "get" }
+  }
+}

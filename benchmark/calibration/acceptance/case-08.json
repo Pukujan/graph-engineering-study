@@ -1,0 +1,18 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-08",
+  "scenario": "the broker never mints a broader credential than requested",
+  "contract_ref": "C-API-02",
+  "invariant_ref": "connector-no-broader-mint",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/principals/{principal_id}/credentials",
+      "body": { "resource": "db:reports", "action": "read", "request_id": "r-08" }
+    }
+  ],
+  "expect": {
+    "status": 200,
+    "json_subset": { "resource": "db:reports", "action": "read" }
+  }
+}

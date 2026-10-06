@@ -1,0 +1,23 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-04",
+  "scenario": "a request outside the granted scope is denied, not partially granted",
+  "contract_ref": "C-API-02",
+  "invariant_ref": "privilege-intersection",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/principals",
+      "body": { "kind": "service", "name": "reports-only" }
+    },
+    {
+      "method": "POST",
+      "path": "/principals/{principal_id}/credentials",
+      "body": { "resource": "k8s:ns/team-a", "action": "apply", "request_id": "r-04" }
+    }
+  ],
+  "expect": {
+    "status": 403,
+    "json_subset": { "error": "denied", "resource": "k8s:ns/team-a", "action": "apply" }
+  }
+}

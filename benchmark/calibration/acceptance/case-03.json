@@ -1,0 +1,18 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-03",
+  "scenario": "an applicable deny overrides a matching allow",
+  "contract_ref": "C-API-03",
+  "invariant_ref": "deny-beats-allow",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/decisions",
+      "body": { "principal_id": "p-deny-allow", "resource": "db:reports", "action": "write" }
+    }
+  ],
+  "expect": {
+    "status": 200,
+    "json_subset": { "allowed": false }
+  }
+}

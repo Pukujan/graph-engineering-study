@@ -1,0 +1,18 @@
+{
+  "schema": "graph-study.benchmark.case.v1",
+  "case_id": "case-06",
+  "scenario": "an expired credential is refused and cannot be used without a fresh decision",
+  "contract_ref": "C-API-07",
+  "invariant_ref": "expired-lease-requires-fresh-decision",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/operations",
+      "body": { "credential_id": "c-06-expired", "resource": "db:reports", "action": "read" }
+    }
+  ],
+  "expect": {
+    "status": 403,
+    "json_subset": { "error": "expired", "credential_id": "c-06-expired" }
+  }
+}

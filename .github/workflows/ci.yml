@@ -31,3 +31,9 @@ jobs:
 
       - name: Render graph
         run: graph-study diagram
+
+      - name: Check calibration cases
+        run: |
+          python scripts/check_cases.py benchmark/calibration/acceptance \
+            --contract benchmark/calibration/shared/contract.md \
+            --invariants formal/invariants.template.json
