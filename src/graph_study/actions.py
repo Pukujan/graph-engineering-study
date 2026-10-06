@@ -43,11 +43,24 @@ def _timeout_text(value: str | bytes | None) -> str:
     return value or ""
 
 
+def _resolve_executable(argv: list[str]) -> list[str]:
+    """Resolve argv[0] through PATH/PATHEXT.
+
+    Windows CreateProcess does not apply PATHEXT, so a bare ``pnpm`` never
+    matches the ``pnpm.CMD`` shim and fails with WinError 2. Resolving the
+    executable first makes shell shims runnable on every platform.
+    """
+    if not argv:
+        return argv
+    resolved = shutil.which(argv[0])
+    return [resolved, *argv[1:]] if resolved else argv
+
+
 def run_command(command: str, cwd: Path, *, timeout: int = 900) -> CommandEvidence:
     started = _now()
     try:
         proc = subprocess.run(
-            shlex.split(command),
+            _resolve_executable(shlex.split(command)),
             cwd=cwd,
             capture_output=True,
             text=True,
@@ -173,7 +186,7 @@ def run_coding_worker(
     started = _now()
     try:
         proc = subprocess.run(
-            shlex.split(rendered),
+            _resolve_executable(shlex.split(rendered)),
             cwd=workspace,
             env=env,
             capture_output=True,
