@@ -57,6 +57,7 @@ Both code claims are pinned to commit `ac985d3`, so they can be re-read later ev
 - [docs/architecture.md](docs/architecture.md) — node boundaries and why inference is small.
 - [docs/study-path.md](docs/study-path.md) — what to reverse-study in every source repo.
 - [docs/benchmark-protocol.md](docs/benchmark-protocol.md) — the frozen IAM A/B benchmark contract.
+- [docs/calibration-runbook.md](docs/calibration-runbook.md) — the operator's ordered steps for the calibration benchmark.
 - [Issue #1](https://github.com/Pukujan/graph-engineering-study/issues/1) — implementation record.
 - [Issue #2](https://github.com/Pukujan/graph-engineering-study/issues/2) — long-running IAM A/B benchmark design.
 
