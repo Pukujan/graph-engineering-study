@@ -72,7 +72,18 @@ policy migration N to N+1, concurrent agents requesting overlapping scopes.
 
 ## Measurement
 
-Track from the first command, not the first model token. The four axes are:
+Track from the first command, not the first model token. Record each arm's
+milestones to its `timeline.jsonl` with the deterministic recorder:
+
+```bash
+python scripts/benchmark_timeline.py record <arm>/timeline.jsonl start
+python scripts/benchmark_timeline.py record <arm>/timeline.jsonl first_build
+python scripts/benchmark_timeline.py summary <arm>/timeline.jsonl
+```
+
+`record` stamps UTC ISO-8601 and rejects unknown milestones; `summary` prints
+elapsed seconds per milestone and exits non-zero if the timeline is not
+monotonic. The four axes are:
 
 - **Speed** — time to bootstrap, first compiling build, first usable end-to-end
   flow, first security gate passing, all visible acceptance tests, holdout
