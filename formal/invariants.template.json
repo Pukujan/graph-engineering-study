@@ -1,0 +1,87 @@
+{
+  "schema": "graph-study.benchmark.formal.v1",
+  "_how_to_use": "Copy to formal/invariants.json and fill every field for each named invariant, then run `python scripts/check_invariants.py formal/invariants.json` and commit only once it reports COMPLETE. The ids below are the invariants named in issue #2; the fields are intentionally empty so the registry fails closed until a human ties each one down.",
+  "invariants": [
+    {
+      "id": "revocation-monotonicity",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "privilege-intersection",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "deny-beats-allow",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "expired-lease-requires-fresh-decision",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "connector-no-broader-mint",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "adapter-no-silent-scope-upgrade",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "replay-no-extra-privilege",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "audit-append-only",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    },
+    {
+      "id": "failover-no-wider-issuance",
+      "method": "",
+      "property": "",
+      "model_boundary": "",
+      "assumptions": [],
+      "counterexample_behavior": "",
+      "implementation_links": []
+    }
+  ]
+}

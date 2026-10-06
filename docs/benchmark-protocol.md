@@ -137,6 +137,18 @@ the counterexample/failure behavior, and the connection to the executable
 implementation. A proof is never treated as proof of the whole implementation
 outside its modeled assumptions.
 
+Record each named invariant in a registry and check it before scoring:
+
+```bash
+python scripts/check_invariants.py formal/invariants.json
+```
+
+`formal/invariants.template.json` lists the invariants named in issue #2 with
+their fields left empty, so the registry fails closed until a human ties each
+one down. The checker rejects a record that omits any of the five items, names a
+method outside TLA+, Lean 4, or SMT, or leaves the assumptions or implementation
+links empty.
+
 ## Boundaries
 
 - No real production credentials, database roles, or cluster-admin access.
